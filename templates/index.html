@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valores API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .values {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .value-box {
+            background: #007BFF;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .value-box span {
+            display: block;
+            font-size: 2em;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        async function fetchValues() {
+            const response = await fetch('/valores');
+            const data = await response.json();
+            document.getElementById('val-max').innerText = data.val_max;
+            document.getElementById('val-min').innerText = data.val_min;
+            document.getElementById('val').innerText = data.val;
+        }
+        function startFetching() {  
+            fetchValues();
+            setInterval(fetchValues, 5000); // Recargar cada 5 segundos
+        }
+        window.onload = startFetching;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Valores API</h1>
+        <div class="values">
+            <div class="value-box">
+                <h2>Valor Máximo</h2>
+                <span id="val-max">0</span>
+            </div>
+            <div class="value-box">
+                <h2>Valor Mínimo</h2>
+                <span id="val-min">0</span>
+            </div>
+            <div class="value-box">
+                <h2>Valor Actual</h2>
+                <span id="val">0</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
